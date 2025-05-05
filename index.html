@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <!-- Lo que hay en el type se llama MIME TYPE -->
+    <link rel="icon" type="image/png" href="/img/favicon-32x32.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To-Do App with Tailwind CSS</title>
+  </head>
+  <!-- <body class="bg-[url('/img/bg-desktop-light.jpg')] bg-no-repeat"> -->
+  <!-- <body class="bg-(image:--bg-desktop) bg-no-repeat font-josefin"> -->
+  <body class="bg-mobile md:bg-desktop bg-size-[100%] bg-no-repeat font-josefin">
+
+    <div class="w-full px-4 sm:w-md mx-auto my-12">
+      <h1 class="text-2xl font-semibold tracking-gigante text-white">TODO</h1>
+
+      <form class="my-4 shadow-lg">
+        <input class="bg-white outline-none focus-visible:ring-2 focus-visible:ring-pink-500 rounded py-2 px-4 w-full" type="text" placeholder="Create a new todo..." class="" />
+      </form>
+
+      <section class="toDo-list shadow-lg">
+        <!-- <article class="bg-white py-2 px-4 first:rounded-t flex items-center gap-3  border-b border-b-gray-300">
+          <input aria-label="Complete to-do checkbox" id="1" class="hidden peer" type="checkbox">
+          <label for="1" class="w-4 h-4 border border-gray-400 rounded-full flex items-center justify-center peer-checked:bg-check-gradient">
+            <svg class="hidden check-icon" xmlns="http://www.w3.org/2000/svg" width="10" height="9"><path fill="none" stroke="#FFF" stroke-width="2" d="M1 4.304L3.696 7l6-6"/></svg>
+          </label>
+          <span class="peer-checked:line-through peer-checked:opacity-30">Pasear a las perras 🐕</span>
+          <button aria-label="Delete button" type="button" class="ml-auto text-gray-600 cursor-pointer hover:scale-110 hover:rotate-90 transition-transform">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18">
+              <path fill="currentColor" fill-rule="evenodd" d="M16.97 0l.708.707L9.546 8.84l8.132 8.132-.707.707-8.132-8.132-8.132 8.132L0 16.97l8.132-8.132L0 .707.707 0 8.84 8.132 16.971 0z"/>
+            </svg>
+          </button>
+        </article> -->
+
+        <!-- <article class="bg-white py-2 px-4 first:rounded-t flex items-center gap-3 border-b border-b-gray-300">
+          <input aria-label="Complete to-do checkbox" id="2" class="hidden peer" type="checkbox">
+          <label for="2" class="w-4 h-4 border border-gray-400 rounded-full flex items-center justify-center peer-checked:bg-check-gradient">
+            <svg class="hidden check-icon" xmlns="http://www.w3.org/2000/svg" width="10" height="9"><path fill="none" stroke="#FFF" stroke-width="2" d="M1 4.304L3.696 7l6-6"/></svg>
+          </label>
+          <span class="peer-checked:line-through peer-checked:opacity-30">Estudiar JavaScript 💻</span>
+          <button type="button" title="Delete button" class="ml-auto text-gray-600 cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18">
+              <path fill="currentColor" fill-rule="evenodd" d="M16.97 0l.708.707L9.546 8.84l8.132 8.132-.707.707-8.132-8.132-8.132 8.132L0 16.97l8.132-8.132L0 .707.707 0 8.84 8.132 16.971 0z"/>
+            </svg>
+          </button>
+        </article>         -->
+      </section>
+      <section class="bg-white py-3 px-4 shadow-lg rounded-b flex justify-between">
+          <span class="text-sm text-gray-500">
+            <span class="items-left-output">5</span> items left
+          </span>
+          <button type="button" class="text-gray-500 text-sm">
+            Clear completed
+          </button>       
+      </section>
+    </div>
+    
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
