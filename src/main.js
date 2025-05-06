@@ -81,6 +81,7 @@ function handleDeleteToDo(article, toDo) {
     }
   });
 }
+ 
 
 // Contar cuántos items faltan por completar
 function countItemsLeft() {
