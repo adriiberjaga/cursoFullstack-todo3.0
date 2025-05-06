@@ -1,11 +1,12 @@
 import './styles/style.css';
-
 import { nanoid } from 'nanoid';
 
 const toDoList = document.querySelector('.toDo-list');
+const $form = document.querySelector('form');
+const clearButton = document.getElementById('clearButton');
+const itemsLeftOutput = document.querySelector('.items-left-output');
 
-
-const allToDos = [
+let allToDos = [
   {
     id: nanoid(5),
     task: 'Comprar leche 🥛',
@@ -23,21 +24,11 @@ const allToDos = [
   }
 ];
 
+// Función principal que imprime los todos
+function printToDos() {
+  toDoList.innerHTML = ''; // Limpiar lista antes de pintar
 
-
-// Imprimir los todos al cargar la página
-printToDos();
-
-// Rellenar el número de items que faltan por completar
-countItemsLeft();
-
-
-
-function printToDos () {
-  const toDoList = document.querySelector('.toDo-list');
-  toDoList.innerHTML = ''; // Limpia antes de volver a pintar
-
-  for (const toDo of allToDos) {
+  for (let toDo of allToDos) {
     const article = document.createElement('article');
     article.className = 'bg-white py-2 px-4 first:rounded-t flex items-center gap-3 border-b border-b-gray-300';
 
@@ -60,49 +51,52 @@ function printToDos () {
     `;
 
     toDoList.append(article);
-
-    const checkBox = article.querySelector(`[data-id="${toDo.id}"]`);
-    const checkIcon = article.querySelector('.check-icon');
-
-    checkBox.addEventListener('change', () => {
-      checkIcon.classList.toggle('hidden');
-      toDo.isCompleted = !toDo.isCompleted;
-      countItemsLeft();
-      console.log(allToDos)
-    });
-
-    const deleteBtn = article.querySelector('.delete-btn');
-    deleteBtn.addEventListener('click', () => {
-      const index = allToDos.findIndex(item => item.id === toDo.id);
-      if (index !== -1) {
-        allToDos.splice(index, 1);
-        printToDos();
-        countItemsLeft();
-      }
-    });
+    handleChangeCompleted(article, toDo);
+    handleDeleteToDo(article, toDo);
   }
 }
 
+// Cambiar estado completado
+function handleChangeCompleted(article, toDo) {
+  const checkBox = article.querySelector(`[data-id="${toDo.id}"]`);
+  const checkIcon = article.querySelector('.check-icon');
 
+  checkBox.addEventListener('change', () => {
+    checkIcon.classList.toggle('hidden');
+    toDo.isCompleted = !toDo.isCompleted;
+    countItemsLeft();
+    console.log(allToDos);
+  });
+}
 
-function countItemsLeft () {
-  const itemsLeftOutput = document.querySelector('.items-left-output');
-  
-  let itemsLeftCount = 0;
-  for (const toDo of allToDos) {
-    if (toDo.isCompleted === false) {
-      itemsLeftCount++;
+// Eliminar ToDo individual
+function handleDeleteToDo(article, toDo) {
+  const deleteBtn = article.querySelector('.delete-btn');
+  deleteBtn.addEventListener('click', () => {
+    const index = allToDos.findIndex(item => item.id === toDo.id);
+    if (index !== -1) {
+      allToDos.splice(index, 1);
+      printToDos();
+      countItemsLeft();
     }
-  }
-  
+  });
+}
+
+// Contar cuántos items faltan por completar
+function countItemsLeft() {
+  const itemsLeftCount = allToDos.filter(toDo => !toDo.isCompleted).length;
   itemsLeftOutput.innerText = itemsLeftCount;
 }
 
+// Mostrar error si el input está vacío
+function showInputError(input) {
+  input.classList.add('inputTask');
+  setTimeout(() => {
+    input.classList.remove('inputTask');
+  }, 2500);
+}
 
-//cazamos el formulario y escuchamos el evento submit
-
-const $form = document.querySelector('form');
-
+// Crear un nuevo ToDo al enviar el formulario
 function createTodo() {
   $form.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -110,7 +104,10 @@ function createTodo() {
     const input = $form.querySelector('input');
     const value = input.value.trim();
 
-    if (value === '') return; // No añadir tareas vacías
+    if (value === '') {
+      showInputError(input);
+      return;
+    }
 
     const newTodo = {
       id: nanoid(5),
@@ -119,17 +116,27 @@ function createTodo() {
     };
 
     allToDos.push(newTodo);
-    
-    // Limpiar la lista actual para volver a imprimir todo
-    toDoList.innerHTML = '';
-
-    // Volver a imprimir todo
     printToDos();
     countItemsLeft();
-
-    // Limpiar input
     input.value = '';
   });
 }
 
-createTodo();
+// Limpiar todos los completados
+function clearCompletedTodos() {
+  clearButton.addEventListener('click', () => {
+    allToDos = allToDos.filter(toDo => !toDo.isCompleted);
+    printToDos();
+    countItemsLeft();
+  });
+}
+
+// Inicialización al cargar la página
+function init() {
+  printToDos();
+  countItemsLeft();
+  createTodo();
+  clearCompletedTodos();
+}
+
+init();
