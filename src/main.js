@@ -5,6 +5,7 @@ const toDoList = document.querySelector('.toDo-list');
 const $form = document.querySelector('form');
 const clearButton = document.getElementById('clearButton');
 const itemsLeftOutput = document.querySelector('.items-left-output');
+const resfresh = document.getElementById('btnRefresh') // btn elimanr todo
 
 let allToDos = [
   {
@@ -131,7 +132,12 @@ function clearCompletedTodos() {
     countItemsLeft();
   });
 }
-
+resfresh.addEventListener('click', clearAllTodos)
+function clearAllTodos() {
+    allToDos = []
+    printToDos()
+    countItemsLeft()
+}
 // Inicialización al cargar la página
 function init() {
   printToDos();
