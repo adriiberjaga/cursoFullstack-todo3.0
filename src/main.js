@@ -6,24 +6,15 @@ const $form = document.querySelector('form');
 const clearButton = document.getElementById('clearButton');
 const itemsLeftOutput = document.querySelector('.items-left-output');
 const resfresh = document.getElementById('btnRefresh') // btn elimanr todo
+function setTodosInLocal() {
+  localStorage.setItem('toDos', JSON.stringify(allToDos))
 
-let allToDos = [
-  {
-    id: nanoid(5),
-    task: 'Comprar leche 🥛',
-    isCompleted: false
-  },
-  {
-    id: nanoid(5),
-    task: 'Escribir código 💻',
-    isCompleted: true
-  },
-  {
-    id: nanoid(5),
-    task: 'Hacer la compra 🛒',
-    isCompleted: false
-  }
-];
+}
+
+
+let allToDos = [];
+const todosLocalStorage = localStorage.getItem('toDos');
+allToDos = todosLocalStorage ? JSON.parse(todosLocalStorage) : [];
 
 // Función principal que imprime los todos
 function printToDos() {
@@ -67,6 +58,7 @@ function handleChangeCompleted(article, toDo) {
     toDo.isCompleted = !toDo.isCompleted;
     countItemsLeft();
     console.log(allToDos);
+    setTodosInLocal() 
   });
 }
 
@@ -79,6 +71,8 @@ function handleDeleteToDo(article, toDo) {
       allToDos.splice(index, 1);
       printToDos();
       countItemsLeft();
+      setTodosInLocal() 
+
     }
   });
 }
@@ -121,6 +115,8 @@ function createTodo() {
     printToDos();
     countItemsLeft();
     input.value = '';
+    setTodosInLocal();
+
   });
 }
 
@@ -130,13 +126,18 @@ function clearCompletedTodos() {
     allToDos = allToDos.filter(toDo => !toDo.isCompleted);
     printToDos();
     countItemsLeft();
+    setTodosInLocal()
+
   });
 }
+
+
 resfresh.addEventListener('click', clearAllTodos)
 function clearAllTodos() {
     allToDos = []
     printToDos()
     countItemsLeft()
+    setTodosInLocal()
 }
 // Inicialización al cargar la página
 function init() {
@@ -145,5 +146,6 @@ function init() {
   createTodo();
   clearCompletedTodos();
 }
+
 
 init();
