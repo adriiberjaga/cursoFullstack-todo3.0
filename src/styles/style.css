@@ -40,8 +40,6 @@
 }
 
 
-
-
 /*  Esto es CSS PURO, para hacerlo en tailwind usariamos la clases group o peer */
 /* input:checked + label {
   background-image: linear-gradient(135deg, var(--bright-blue), var(--bright-purple));
